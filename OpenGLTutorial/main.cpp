@@ -11,6 +11,8 @@
 #include <stdlib.h>
 
 #include <glfw3.h>
+#include <glm.hpp>
+using namespace glm;
 
 int main(int argc, const char * argv[]) {
     

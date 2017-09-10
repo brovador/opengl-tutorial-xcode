@@ -239,7 +239,10 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
-				HEADER_SEARCH_PATHS = "/usr/local/include/GLFW/**";
+				HEADER_SEARCH_PATHS = (
+					"/usr/local/include/GLFW/**",
+					"/usr/local/Cellar/glm/0.9.8.5/include/glm/**",
+				);
 				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -252,7 +255,10 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
-				HEADER_SEARCH_PATHS = "/usr/local/include/GLFW/**";
+				HEADER_SEARCH_PATHS = (
+					"/usr/local/include/GLFW/**",
+					"/usr/local/Cellar/glm/0.9.8.5/include/glm/**",
+				);
 				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
