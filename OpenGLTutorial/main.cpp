@@ -19,26 +19,28 @@
 #include <glm.hpp>
 using namespace glm;
 
+#include "vertexInfo.hpp"
 #include "shader.hpp"
 
 #define WINDOW_WIDTH 1024
 #define WINDOW_HEIGHT 768
 
 
+//IDs
 GLuint vertexArrayID;
-GLuint vertexBuffer;
 GLuint programID;
-static const GLfloat g_vertex_buffer_data[] = {
-    -1.0f, -1.0f, 0.0f,
-    1.0f, -1.0f, 0.0f,
-    0.0f,  1.0f, 0.0f,
-};
+GLuint matrixID;
 
+//Buffers
+GLuint vertexBuffer;
+GLuint colorBuffer;
+
+//Matrices
 glm::mat4 Projection;
 glm::mat4 View;
 glm::mat4 Model;
 
-GLuint matrixID;
+
 
 void init()
 {
@@ -52,7 +54,12 @@ void init()
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
     
-    glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+    glGenBuffers(1, &colorBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
+    
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
     
     //Init matrices
     Projection = glm::perspective(
@@ -62,36 +69,39 @@ void init()
                                   100.f
                                   );
     View = glm::lookAt(
-                       glm::vec3(0, 0, 3),
+                       glm::vec3(4, 3, -3),
                        glm::vec3(0, 0, 0),
                        glm::vec3(0, 1, 0)
                        );
 }
 
-float angle = 0.0f;
-
 void draw()
 {
-    angle += 0.01f;
-    
     glm::mat4 Model = glm::mat4(1.0f);
     
-    Model = glm::translate(Model, glm::vec3(-1, 0, 0));
-    Model = glm::rotate(Model, angle, glm::vec3(0, 0, 1));
-    Model = glm::scale(Model, glm::vec3(.5f, .5f, .5f));
+    //Model = glm::translate(Model, glm::vec3(-1, 0, 0));
+    //Model = glm::rotate(Model, angle, glm::vec3(0, 0, 1));
+    //Model = glm::scale(Model, glm::vec3(.5f, .5f, .5f));
     
     glm::mat4 mvp = Projection * View * Model;
     glUniformMatrix4fv(matrixID, 1, GL_FALSE, &mvp[0][0]);
     
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
     glUseProgram(programID);
-    
     
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    
+    glEnableVertexAttribArray(1);
+    glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+    
+    glDrawArrays(GL_TRIANGLES, 0, 12 * 3);
+    
     glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
 }
 
 void end()
