@@ -13,10 +13,16 @@
 #include <glfw3.h>
 #include <OpenGL/gl3.h>
 #include <OpenGL/glext.h>
+
+#include <gtc/matrix_transform.hpp>
+#include <gtx/transform.hpp>
 #include <glm.hpp>
 using namespace glm;
 
 #include "shader.hpp"
+
+#define WINDOW_WIDTH 1024
+#define WINDOW_HEIGHT 768
 
 
 GLuint vertexArrayID;
@@ -28,9 +34,16 @@ static const GLfloat g_vertex_buffer_data[] = {
     0.0f,  1.0f, 0.0f,
 };
 
+glm::mat4 Projection;
+glm::mat4 View;
+glm::mat4 Model;
+
+GLuint matrixID;
+
 void init()
 {
     programID = LoadShaders("/tmp/simple.vert", "/tmp/simple.frag");
+    matrixID = glGetUniformLocation(programID, "MVP");
     
     glGenVertexArrays(1, &vertexArrayID);
     glBindVertexArray(vertexArrayID);
@@ -40,12 +53,39 @@ void init()
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
     
     glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+    
+    //Init matrices
+    Projection = glm::perspective(
+                                  glm::radians(45.f),
+                                  (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT,
+                                  0.1f,
+                                  100.f
+                                  );
+    View = glm::lookAt(
+                       glm::vec3(0, 0, 3),
+                       glm::vec3(0, 0, 0),
+                       glm::vec3(0, 1, 0)
+                       );
 }
+
+float angle = 0.0f;
 
 void draw()
 {
+    angle += 0.01f;
+    
+    glm::mat4 Model = glm::mat4(1.0f);
+    
+    Model = glm::translate(Model, glm::vec3(-1, 0, 0));
+    Model = glm::rotate(Model, angle, glm::vec3(0, 0, 1));
+    Model = glm::scale(Model, glm::vec3(.5f, .5f, .5f));
+    
+    glm::mat4 mvp = Projection * View * Model;
+    glUniformMatrix4fv(matrixID, 1, GL_FALSE, &mvp[0][0]);
+    
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glUseProgram(programID);
+    
     
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
@@ -75,7 +115,7 @@ int main(int argc, const char * argv[]) {
     
     // Open a window and create its OpenGL context
     GLFWwindow* window; // (In the accompanying source code, this variable is global for simplicity)
-    window = glfwCreateWindow( 1024, 768, "Tutorial 01", NULL, NULL);
+    window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "OpenGL Tutorials", NULL, NULL);
     if( window == NULL ){
         fprintf( stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n" );
         glfwTerminate();
