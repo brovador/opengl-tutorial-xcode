@@ -21,6 +21,7 @@ using namespace glm;
 
 #include "vertexInfo.hpp"
 #include "shader.hpp"
+#include "objloader.hpp"
 
 #define WINDOW_WIDTH 1024
 #define WINDOW_HEIGHT 768
@@ -32,8 +33,8 @@ GLuint programID;
 GLuint matrixID;
 
 //Buffers
-GLuint vertexBuffer;
-GLuint colorBuffer;
+GLuint vertexBufferID;
+GLuint colorBufferID;
 
 //Matrices
 glm::mat4 Projection;
@@ -50,13 +51,22 @@ void init()
     glGenVertexArrays(1, &vertexArrayID);
     glBindVertexArray(vertexArrayID);
     
-    glGenBuffers(1, &vertexBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+    std::vector< glm::vec3 > vertices;
+    std::vector< glm::vec2 > uvs;
+    std::vector< glm::vec3 > normals; // Won't be used at the moment.
+    bool res = loadOBJ("/tmp/cube.obj", vertices, uvs, normals);
     
-    glGenBuffers(1, &colorBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
+    if (!res) {
+        fprintf(stderr, "No obj file loaded\n");
+        return;
+    }
+    
+    glGenBuffers(1, &vertexBufferID);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
+    glBufferData(GL_ARRAY_BUFFER,
+                 vertices.size() * sizeof(glm::vec3),
+                 &vertices[0],
+                 GL_STATIC_DRAW);
     
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
@@ -75,13 +85,15 @@ void init()
                        );
 }
 
+float rotationSpeed = 0.001f;
+float rotationAngle = 0.0f;
+
 void draw()
 {
     glm::mat4 Model = glm::mat4(1.0f);
     
-    //Model = glm::translate(Model, glm::vec3(-1, 0, 0));
-    //Model = glm::rotate(Model, angle, glm::vec3(0, 0, 1));
-    //Model = glm::scale(Model, glm::vec3(.5f, .5f, .5f));
+    Model = glm::rotate(Model, rotationAngle, glm::vec3(0, 1, 0));
+    rotationAngle += rotationSpeed;
     
     glm::mat4 mvp = Projection * View * Model;
     glUniformMatrix4fv(matrixID, 1, GL_FALSE, &mvp[0][0]);
@@ -91,22 +103,18 @@ void draw()
     glUseProgram(programID);
     
     glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-    
-    glEnableVertexAttribArray(1);
-    glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
     
     glDrawArrays(GL_TRIANGLES, 0, 12 * 3);
     
     glDisableVertexAttribArray(0);
-    glDisableVertexAttribArray(1);
 }
 
 void end()
 {
-    glDeleteBuffers(1, &vertexBuffer);
+    glDeleteBuffers(1, &vertexBufferID);
+    glDeleteBuffers(1, &colorBufferID);
     glDeleteVertexArrays(1, &vertexArrayID);
 }
 

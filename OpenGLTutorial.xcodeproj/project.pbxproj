@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EA3544281F69958F00A40BDF /* objloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EA3544261F69958F00A40BDF /* objloader.cpp */; };
+		EA35442A1F699AFE00A40BDF /* cube.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = EA3544291F699A9600A40BDF /* cube.obj */; };
 		EA81D2BE1F654B5100898A2D /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EA81D2BC1F654B5100898A2D /* shader.cpp */; };
 		EA81D2C11F654E3F00898A2D /* simple.vert in CopyFiles */ = {isa = PBXBuildFile; fileRef = EA81D2BF1F654C6200898A2D /* simple.vert */; };
 		EA81D2C21F654E3F00898A2D /* simple.frag in CopyFiles */ = {isa = PBXBuildFile; fileRef = EA81D2C01F654C7300898A2D /* simple.frag */; };
@@ -22,6 +24,7 @@
 			dstPath = /tmp;
 			dstSubfolderSpec = 0;
 			files = (
+				EA35442A1F699AFE00A40BDF /* cube.obj in CopyFiles */,
 				EA81D2C11F654E3F00898A2D /* simple.vert in CopyFiles */,
 				EA81D2C21F654E3F00898A2D /* simple.frag in CopyFiles */,
 			);
@@ -31,6 +34,9 @@
 
 /* Begin PBXFileReference section */
 		EA3283D31F65D01300543976 /* vertexInfo.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vertexInfo.hpp; sourceTree = "<group>"; };
+		EA3544261F69958F00A40BDF /* objloader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = objloader.cpp; sourceTree = "<group>"; };
+		EA3544271F69958F00A40BDF /* objloader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = objloader.hpp; sourceTree = "<group>"; };
+		EA3544291F699A9600A40BDF /* cube.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
 		EA6A62DF1F64595500336AA5 /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = ../../../../../../usr/local/lib/libglfw3.a; sourceTree = "<group>"; };
 		EA6A62E11F645E1A00336AA5 /* libglfw.3.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.2.dylib; path = ../../../../../../usr/local/lib/libglfw.3.2.dylib; sourceTree = "<group>"; };
 		EA81D2BC1F654B5100898A2D /* shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shader.cpp; sourceTree = "<group>"; };
@@ -76,12 +82,15 @@
 		EAB3EDFE1F644F410047A487 /* OpenGLTutorial */ = {
 			isa = PBXGroup;
 			children = (
+				EA3544291F699A9600A40BDF /* cube.obj */,
 				EAB3EDFF1F644F410047A487 /* main.cpp */,
 				EA81D2BC1F654B5100898A2D /* shader.cpp */,
 				EA81D2BD1F654B5100898A2D /* shader.hpp */,
 				EA81D2BF1F654C6200898A2D /* simple.vert */,
 				EA81D2C01F654C7300898A2D /* simple.frag */,
 				EA3283D31F65D01300543976 /* vertexInfo.hpp */,
+				EA3544261F69958F00A40BDF /* objloader.cpp */,
+				EA3544271F69958F00A40BDF /* objloader.hpp */,
 			);
 			path = OpenGLTutorial;
 			sourceTree = "<group>";
@@ -155,6 +164,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA81D2BE1F654B5100898A2D /* shader.cpp in Sources */,
+				EA3544281F69958F00A40BDF /* objloader.cpp in Sources */,
 				EAB3EE001F644F410047A487 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
