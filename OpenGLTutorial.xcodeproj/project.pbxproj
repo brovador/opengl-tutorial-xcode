@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EA1152281F6D251D000C6E67 /* suzanne.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = EA1152271F6D2518000C6E67 /* suzanne.obj */; };
 		EA3544281F69958F00A40BDF /* objloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EA3544261F69958F00A40BDF /* objloader.cpp */; };
 		EA35442A1F699AFE00A40BDF /* cube.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = EA3544291F699A9600A40BDF /* cube.obj */; };
 		EA81D2BE1F654B5100898A2D /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EA81D2BC1F654B5100898A2D /* shader.cpp */; };
@@ -24,6 +25,7 @@
 			dstPath = /tmp;
 			dstSubfolderSpec = 0;
 			files = (
+				EA1152281F6D251D000C6E67 /* suzanne.obj in CopyFiles */,
 				EA35442A1F699AFE00A40BDF /* cube.obj in CopyFiles */,
 				EA81D2C11F654E3F00898A2D /* simple.vert in CopyFiles */,
 				EA81D2C21F654E3F00898A2D /* simple.frag in CopyFiles */,
@@ -33,6 +35,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		EA1152271F6D2518000C6E67 /* suzanne.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = suzanne.obj; sourceTree = "<group>"; };
 		EA3283D31F65D01300543976 /* vertexInfo.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vertexInfo.hpp; sourceTree = "<group>"; };
 		EA3544261F69958F00A40BDF /* objloader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = objloader.cpp; sourceTree = "<group>"; };
 		EA3544271F69958F00A40BDF /* objloader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = objloader.hpp; sourceTree = "<group>"; };
@@ -82,6 +85,7 @@
 		EAB3EDFE1F644F410047A487 /* OpenGLTutorial */ = {
 			isa = PBXGroup;
 			children = (
+				EA1152271F6D2518000C6E67 /* suzanne.obj */,
 				EA3544291F699A9600A40BDF /* cube.obj */,
 				EAB3EDFF1F644F410047A487 /* main.cpp */,
 				EA81D2BC1F654B5100898A2D /* shader.cpp */,

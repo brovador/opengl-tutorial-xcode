@@ -72,8 +72,16 @@ bool loadOBJ(const char *path,
     
     for( unsigned int i=0; i<vertexIndices.size(); i++ ){
         unsigned int vertexIndex = vertexIndices[i];
+        unsigned int uvIndex = uvIndices[i];
+        unsigned int normalIndex = normalIndices[i];
+        
         glm::vec3 vertex = temp_vertices[ vertexIndex-1 ];
+        glm::vec2 uv = temp_uvs[ uvIndex-1 ];
+        glm::vec3 normal = temp_normals[ normalIndex-1 ];
+        
         out_vertices.push_back(vertex);
+        out_normals.push_back(normal);
+        out_uvs.push_back(uv);
     }
     
     return true;
